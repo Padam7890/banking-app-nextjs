@@ -26,7 +26,9 @@ const BankCard = ({
               <h2 className=" text-12 font-semibold text-white">** / **</h2>
             </div>
             <p className="text-14 font-semibold tracking-[1.1px] text-white">
+            &#9679;&#9679;&#9679;&#9679;            &#9679;&#9679;&#9679;&#9679;
             &#9679;&#9679;&#9679;&#9679;
+
             <span className=" text-16">{account.mask}</span>
             </p>
           </article>
@@ -44,6 +46,7 @@ const BankCard = ({
             width={45}
             height={32}
             alt="mastercard"
+            className=" ml-5"
           />
         </div>
         <Image
