@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import CustomInput from "./CustomInput";
 
 interface Props {
   type: string;
@@ -68,47 +69,8 @@ const AuthForm = ({ type }: Props) => {
           {/* forms */}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <div className="form-item">
-                    <FormLabel className="form-label" htmlFor="email">
-                      Email address
-                    </FormLabel>
-                    <div className=" flex w-full flex-col">
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your email address"
-                          className=" input-class"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="form-message mt-2"></FormMessage>
-                    </div>
-                  </div>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <div className="form-item">
-                    <FormLabel className="form-label">Password</FormLabel>
-                    <div className=" flex w-full flex-col">
-                      <FormControl>
-                        <Input
-                          placeholder="Enter Password"
-                          className=" input-class"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="form-message mt-2"></FormMessage>
-                    </div>
-                  </div>
-                )}
-              />
+              <CustomInput control={form.control} name={"email"} placeholder={"Enter your Email"} label={"Email"}/>
+              <CustomInput control={form.control} name={"password"} placeholder={"Enter your Password"} label={"Password"}/>
               <Button type="submit">Submit</Button>
             </form>
           </Form>
