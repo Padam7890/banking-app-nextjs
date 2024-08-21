@@ -21,16 +21,15 @@ import { Input } from "@/components/ui/input";
 import CustomInput from "./CustomInput";
 import { Loader2 } from "lucide-react";
 import { AuthformSchema } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import {signIn, signUp, } from "@/lib/actions/user.actions";
 
 interface Props {
   type: string;
 }
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
 
 const AuthForm = ({ type }: Props) => {
+  const router = useRouter();
   const [user, setUser] = useState();
   const [loading, setIsloading] = useState<boolean>(false);
 
@@ -44,11 +43,29 @@ const AuthForm = ({ type }: Props) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsloading(true);
-    console.log(values);
-    setIsloading(false);
-  }
+    try {
+      if (type === "sign-up") {
+        const newUser = await signUp(data);
+        setUser(newUser);
+      }
+
+      if (type === "sign-in") {
+        const response = await signIn({
+          email: data.email,
+          password: data.password,
+        });
+        if (response) router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsloading(false);
+    }
+  };
+
+
   return (
     <section className=" auth-form">
       <header className="flex flex-col gap-5 md:gap-8 ">
@@ -98,6 +115,12 @@ const AuthForm = ({ type }: Props) => {
                     name={"address"}
                     placeholder={"Enter your Address"}
                     label={"Address"}
+                  />
+                  <CustomInput
+                    control={form.control}
+                    name={"city"}
+                    placeholder={"Enter your City"}
+                    label={"City"}
                   />
 
                   <div className=" flex gap-4">
