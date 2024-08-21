@@ -34,7 +34,7 @@ const AuthForm = ({ type }: Props) => {
   const [user, setUser] = useState();
   const [loading, setIsloading] = useState<boolean>(false);
 
-  const formSchema = AuthformSchema(type)
+  const formSchema = AuthformSchema(type);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -78,54 +78,58 @@ const AuthForm = ({ type }: Props) => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               {type === "sign-up" && (
                 <>
-                  <CustomInput
-                    control={form.control}
-                    name={"firstName"}
-                    placeholder={"firstName"}
-                    label={"Enter your firstName"}
-                  />
+                  <div className=" flex  gap-4">
+                    <CustomInput
+                      control={form.control}
+                      name={"firstName"}
+                      placeholder={"Enter your first name"}
+                      label={"FirstName"}
+                    />
 
-                  <CustomInput
-                    control={form.control}
-                    name={"lastName"}
-                    placeholder={"lastName"}
-                    label={"Enter your lastName"}
-                  />
-
+                    <CustomInput
+                      control={form.control}
+                      name={"lastName"}
+                      placeholder={" Enter your lastName"}
+                      label={"LastName"}
+                    />
+                  </div>
                   <CustomInput
                     control={form.control}
                     name={"address"}
-                    placeholder={"Address"}
-                    label={"Enter your Address"}
+                    placeholder={"Enter your Address"}
+                    label={"Address"}
                   />
 
-                  <CustomInput
-                    control={form.control}
-                    name={"state"}
-                    placeholder={"State"}
-                    label={"Enter your State"}
-                  />
+                  <div className=" flex gap-4">
+                    <CustomInput
+                      control={form.control}
+                      name={"state"}
+                      placeholder={"Enter your State"}
+                      label={"State"}
+                    />
 
-                  <CustomInput
-                    control={form.control}
-                    name={"postalcode"}
-                    placeholder={"PostalCode"}
-                    label={"Enter your PostalCode"}
-                  />
+                    <CustomInput
+                      control={form.control}
+                      name={"postalcode"}
+                      placeholder={"Enter your PostalCode"}
+                      label={"Postal Code"}
+                    />
+                  </div>
+                  <div className=" flex gap-4">
+                    <CustomInput
+                      control={form.control}
+                      name={"dob"}
+                      placeholder={"Enter your Date of birth"}
+                      label={"DOB"}
+                    />
 
-                  <CustomInput
-                    control={form.control}
-                    name={"dob"}
-                    placeholder={"Date of Birth"}
-                    label={"Enter your Date of birth"}
-                  />
-
-                  <CustomInput
-                    control={form.control}
-                    name={"ssn"}
-                    placeholder={"SSN"}
-                    label={"Enter your SSN Number"}
-                  />
+                    <CustomInput
+                      control={form.control}
+                      name={"ssn"}
+                      placeholder={"Enter your SSN Number"}
+                      label={"SSN"}
+                    />
+                  </div>
                 </>
               )}
               <CustomInput
