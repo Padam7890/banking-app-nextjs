@@ -1,18 +1,40 @@
 "use server";
 
-import { ID } from "node-appwrite";
+import { ID, Query } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "../appwrite";
 import { cookies } from "next/headers";
 import { parseStringify } from "../utils";
 
-export const signIn = async () => {
+export const signIn = async ({ email, password }: signInProps) => {
   try {
-  } catch (error) {}
+    const { account } = await createAdminClient();
+    const response = await account.createEmailPasswordSession(email, password);
+    console.log(response);
+    
+    // Debugging: Log the session secret to ensure it's being retrieved
+    console.log("Session Secret Retrieved:", response.secret);
+
+    cookies().set("appwrite-session", response.secret, {
+      path: "/",
+      httpOnly: true,
+      sameSite: "strict",
+      secure: false, // Ensure this is false in local development
+    });
+
+    // Debugging: Confirm the cookie setting process
+    console.log("Cookie 'appwrite-session' has been set.");
+
+    return parseStringify(response);
+  } catch (error) {
+    console.error("Sign-in failed with error:", error);
+    throw new Error("Failed to sign in");
+  }
 };
+
 
 export const signUp = async (userdata: SignUpParams) => {
   try {
-    const {email,password,firstName,lastName} = userdata;
+    const { email, password, firstName, lastName } = userdata;
 
     const { account } = await createAdminClient();
 
@@ -29,20 +51,22 @@ export const signUp = async (userdata: SignUpParams) => {
       path: "/",
       httpOnly: true,
       sameSite: "strict",
-      secure: true,
+      secure: false,
     });
     return parseStringify(newUserAccount);
-
-  } catch (error) {}
+  } catch (error) {
+    throw new Error("Failed to create account");
+  }
 };
-
-// ... your initilization functions
 
 export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
-    return await account.get();
+    const user = await account.get();
+    return parseStringify(user);
   } catch (error) {
-    return null;
+    // Optionally log error for debugging
+    console.error(error);
+    // throw new Error("Failed to retrieve user data");
   }
 }
