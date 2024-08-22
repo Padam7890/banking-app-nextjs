@@ -6,16 +6,16 @@ import BankCard from "./BankCard";
 const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
   return (
     <aside className="right-sidebar">
-      <section className="flex flex-col pb-8">
+      <section className="flex flex-col pb-16">
         <div className="profile-banner">
           <div className="profile">
-            <div className="profile-img">
+            <div className="profile-img mt-14">
               <span className=" text-5xl font-bold text-blue-500">
-                {user?.name}
+                {/* {user?.name} */}
               </span>
             </div>
 
-            <div className="profile-details">
+            <div className="profile-details mt-8">
               <h1 className="profile-name">
                 {user?.name}
               </h1>

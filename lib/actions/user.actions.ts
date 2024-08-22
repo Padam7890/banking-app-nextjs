@@ -11,18 +11,12 @@ export const signIn = async ({ email, password }: signInProps) => {
     const response = await account.createEmailPasswordSession(email, password);
     console.log(response);
     
-    // Debugging: Log the session secret to ensure it's being retrieved
-    console.log("Session Secret Retrieved:", response.secret);
-
     cookies().set("appwrite-session", response.secret, {
       path: "/",
       httpOnly: true,
       sameSite: "strict",
-      secure: false, // Ensure this is false in local development
+      secure: false,
     });
-
-    // Debugging: Confirm the cookie setting process
-    console.log("Cookie 'appwrite-session' has been set.");
 
     return parseStringify(response);
   } catch (error) {
@@ -65,8 +59,16 @@ export async function getLoggedInUser() {
     const user = await account.get();
     return parseStringify(user);
   } catch (error) {
-    // Optionally log error for debugging
     console.error(error);
-    // throw new Error("Failed to retrieve user data");
+  }
+}
+
+export const loggOutAccount = async ()=>{
+  try {
+    const { account } = await createSessionClient();
+    cookies().delete('appwrite-session');
+    await account.deleteSession('current');
+  } catch (error) {
+    console.error(error);
   }
 }
