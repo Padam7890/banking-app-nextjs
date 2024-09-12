@@ -23,6 +23,7 @@ import { Loader2 } from "lucide-react";
 import { AuthformSchema } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import {signIn, signUp, } from "@/lib/actions/user.actions";
+import PlaidLink from "./PlaidLink";
 
 interface Props {
   type: string;
@@ -86,9 +87,11 @@ const AuthForm = ({ type }: Props) => {
           </h1>
         </div>
       </header>
-      {user ? (
-        <div className="flex flex-col gap-4">{}</div>
-      ) : (
+      {/* {user ? ( */}
+        <div className="flex flex-col gap-4">
+          <PlaidLink user={user} variant="primary"/>
+        </div>
+      {/* ) : ( */}
         <>
           {/* forms */}
           <Form {...form}>
@@ -194,7 +197,7 @@ const AuthForm = ({ type }: Props) => {
             </footer>
           </Form>
         </>
-      )}
+      {/* )} */}
     </section>
   );
 };
